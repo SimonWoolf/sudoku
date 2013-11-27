@@ -74,7 +74,7 @@ class Grid
     if !valid?
       raise 'invalid'
     end
-    while !solved?
+    while true
       solved_cells = solved_cell_count()
       cells.each{|cell| solve_cell(cell) if !cell.solved?}
       if solved_cells == solved_cell_count()
@@ -85,18 +85,12 @@ class Grid
     raise 'Generated invalid solution' unless valid?
   end
 
-  def solved?
-    false
-    # cells.all? {|cell| cell.solved?} && valid?
-  end
-
   def make_a_guess
     guess_grid = Grid.deep_copy(self)
     guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
     guess_candidates = candidates_for(guess_cell)
     print "BEFORE guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
     guess_candidates.each do |candidate|
-      # puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
       print "AFTER guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n\n"
       guess_cell.value = candidate
       return true if guess_grid.solve
