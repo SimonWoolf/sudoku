@@ -111,7 +111,7 @@ class Grid
     bars = '|'.*(27).split('')
     lines = bars.zip(groups_of_three).flatten
     eachline = (0..53).step(6).map{|i| "#{lines[i..i+5].join('')}|\n"}
-    puts "#{horiz_splitter}\n#{(1..9).step(3).map{|i| "#{eachline[i..i+2].join('')}#{horiz_splitter}"}.join("\n")}"
+    puts "#{horiz_splitter}\n#{(0..8).step(3).map{|i| "#{eachline[i..i+2].join('')}#{horiz_splitter}"}.join("\n")}"
   end
 end
 
