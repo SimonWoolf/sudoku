@@ -61,31 +61,16 @@ class Grid
     end
   end
 
-  def solve_cell_at(row, column)
-    solve_cell(cell_at(row, row))
-  end
-
-  def solve_cell(current_cell)
-    possibilities = candidates_for(current_cell)
-    if possibilities.length == 1
-      current_cell.value = possibilities.first 
-      puts "Solved: " + current_cell.inspect
-    end
-  end
 
   def solve()
-    puts "entering solve(). Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"; p self
-    raise_and_print_invalid_trace if !valid?
+    raise "Invalid state #{self.inspect}" if !valid?
     while !solved?
       solved_cells = solved_cell_count()
-      # try_easy_solver
       if solved_cells == solved_cell_count()
         guess_grid = Grid.deep_copy(self)
         guess_cell = first_unsolved_cell_in(guess_grid)
         guess_candidates = candidates_for(guess_cell)
-        puts "outside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id} at (#{guess_cell.row}, #{guess_cell.column}) (=#{guess_cell.value.inspect})"
         guess_candidates.each do |candidate|
-          puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id} at (#{guess_cell.row}, #{guess_cell.column}) (=#{guess_cell.value.inspect})"
           guess_cell.value = candidate
           guess_grid.solve # Recursive step
         end
@@ -98,17 +83,6 @@ class Grid
 
   def first_unsolved_cell_in(grid)
     grid.cells.find { |cell| !cell.solved? }
-  end
-  
-  def try_easy_solver 
-    cells.each{|cell| solve_cell(cell) if !cell.solved?}
-  end
-
-  def raise_and_print_invalid_trace
-    puts "Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"
-    puts 'following is invalid:'
-    p self
-    raise 'invalid'
   end
 
   def solved_cell_count
