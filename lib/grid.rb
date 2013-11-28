@@ -114,7 +114,6 @@ class Grid
 
     # print "before guess_candidates.each. Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
     print "BEFORE GC guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
-    GC.start
     print "AFTER GC BEFORE guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
     guess_candidates.each do |candidate|
       # puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
