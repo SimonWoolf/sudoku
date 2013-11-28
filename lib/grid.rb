@@ -61,18 +61,15 @@ class Grid
     raise "Invalid state #{self.inspect}" if !valid?
     p self
     while !solved?
-      solved_cells = solved_cell_count()
-      if solved_cells == solved_cell_count()
-        guess_grid = Grid.deep_copy(self)
-        guess_cell = first_unsolved_cell_in(guess_grid)
-        guess_candidates = candidates_for(guess_cell)
-        guess_candidates.each do |candidate|
-          guess_cell.value = candidate
-          guess_grid.solve # Recursive step
-        end
-        return guess_grid if !guess_grid.solved?
-        self.cells = guess_grid.cells #
+      guess_grid = Grid.deep_copy(self)
+      guess_cell = first_unsolved_cell_in(guess_grid)
+      guess_candidates = candidates_for(guess_cell)
+      guess_candidates.each do |candidate|
+        guess_cell.value = candidate
+        guess_grid.solve # Recursive step
       end
+      return guess_grid if !guess_grid.solved?
+      self.cells = guess_grid.cells #
     end
     raise 'Generated invalid solution' unless valid?
   end
