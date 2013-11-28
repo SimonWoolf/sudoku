@@ -78,7 +78,7 @@ class Grid
     raise_and_print_invalid_trace if !valid?
     while !solved?
       solved_cells = solved_cell_count()
-      easy_solver
+      # try_easy_solver
       if solved_cells == solved_cell_count()
         guess_grid = Grid.deep_copy(self)
         guess_cell = first_unsolved_cell_in(guess_grid)
@@ -100,7 +100,7 @@ class Grid
     grid.cells.find { |cell| !cell.solved? }
   end
   
-  def easy_solver 
+  def try_easy_solver 
     cells.each{|cell| solve_cell(cell) if !cell.solved?}
   end
 
