@@ -70,67 +70,43 @@ class Grid
     possibilities = candidates_for(current_cell)
     if possibilities.length == 1
       current_cell.value = possibilities.first 
-      p "solved:" + current_cell.inspect
+      puts "Solved: " + current_cell.inspect
     end
   end
 
   def solve()
-    puts "entering solve()"
+    puts "entering solve(). Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"
     p self
-    # raise 'Invalid input' unless valid?
-    if !valid?
-      puts "Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"
-
-      puts 'following is invalid:'
-      p self
-      raise 'invalid'
-    end
+    raise_and_print_invalid_trace if !valid?
     while !solved?
       solved_cells = solved_cell_count()
       cells.each{|cell| solve_cell(cell) if !cell.solved?}
       if solved_cells == solved_cell_count()
-        try = make_a_guess
-        return nil if try.nil?
+        guess_grid = Grid.deep_copy(self)
+        guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
+        puts "Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
+        guess_candidates = candidates_for(guess_cell)
+        # print "before guess_candidates.each. Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
+        guess_candidates.each do |candidate|
+          puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
+          guess_cell.value = candidate
+          return true if guess_grid.solve
+        end
+        if guess_grid.solved?
+          puts "Guess grid solved"
+          self.cells = guess_grid.cells 
+        end
+        return nil
       end
-      # if try.nil? #REMOVEME
-      #   puts 'guessing returned nill'
-      # end
     end
     raise 'Generated invalid solution' unless valid?
   end
 
-  def make_a_guess
-    # puts 'make a guess'
-    puts "entering make_a_guess()"
+  def raise_and_print_invalid_trace
+    puts "Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"
+    puts 'following is invalid:'
     p self
-    guess_grid = Grid.deep_copy(self)
-    # puts guess_grid.cells[0].inspect
-    guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
-    puts "Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
-    # p guess_cell
-    guess_candidates = candidates_for(guess_cell)
-    puts "GUEST CANDIDATES:"
-    puts guess_candidates.inspect + guess_candidates.object_id.to_s
-
-    # print "before guess_candidates.each. Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
-    print "BEFORE guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
-    guess_candidates.each do |candidate|
-      # puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
-      print "AFTER guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
-      puts guess_candidates.inspect + guess_candidates.object_id.to_s
-      # depth = Kernel.caller.select{|l| l.match /solve/}.count
-      # puts "Depth: #{depth}"
-      # puts guess_grid.inspect
-      # return nil if guess_candidates.empty?
-      # guess_cell.value = guess_candidates.shift
-      # break unless guess_grid.solve == nil #Try another candidate if that one lead to a dead end
-      guess_cell.value = candidate
-      return true if guess_grid.solve
-    end
-    if guess_grid.solved?
-      puts "Guess grid solved"
-      self.cells = guess_grid.cells 
-    end
+    raise 'invalid'
   end
 
   def solved_cell_count
