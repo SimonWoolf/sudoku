@@ -17,7 +17,7 @@ describe Grid do
       +---+---+---+"
     }
     let(:grid){Grid.new(testinput)}
-    let(:unsolved_cell){grid.cell_at(row:1, column:1)}
+    let(:unsolved_cell){grid.cell_at(1, 1)}
     
 
   context 'initialization' do
@@ -63,11 +63,11 @@ describe Grid do
     it 'should set cell to a number if that number is the only candidate' do
       expect(unsolved_cell.value).to eq 0
       # expect(grid).to receive(:solve_cell)
-      grid.solve_cell_at(row:1, column:1)
+      grid.solve_cell_at(1, 1)
       expect(unsolved_cell.value).to eq 2
     end
 
-    it 'should solve the puzzle, if all cells are soluble' do
+    it 'should solve the puzzle, if all cells are soluble without guessing' do
       grid.solve
       expect(grid).to be_solved 
     end
@@ -77,7 +77,7 @@ describe Grid do
     it 'should give a solution for an empty grid' do
       empty_grid = Grid.new('.'*81)
       # expect(empty_grid.solve).to be_solved
-      expect {empty_grid.solve}.to raise_error("failed")
+      expect {empty_grid.solve}.to raise_error
     end
   end
 
@@ -105,11 +105,10 @@ describe Grid do
    it 'should work' do
      old_grid = Grid.new(testinput)
      new_grid = Grid.deep_copy(old_grid)
-     expect(old_grid.cell_at(row:1, column:1).object_id).to_not \
-      eq(new_grid.cell_at(row:1, column:1).object_id)
+     expect(old_grid.cell_at(1, 1).object_id).to_not \
+      eq(new_grid.cell_at(1, 1).object_id)
     end
   end
-
 end # of describe
 
 

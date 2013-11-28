@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'grid'
 
 input = '.'*81

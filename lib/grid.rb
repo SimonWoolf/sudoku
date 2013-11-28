@@ -20,7 +20,6 @@ class Grid
   end
 
   def self.deep_copy(instance)
-    # Marshal.load(Marshal.dump(instance))
     Grid.new(instance.to_s)
   end
 
@@ -82,23 +81,23 @@ class Grid
       easy_solver
       if solved_cells == solved_cell_count()
         guess_grid = Grid.deep_copy(self)
-        guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
-        puts "Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
+        guess_cell = first_unsolved_cell_in(guess_grid)
         guess_candidates = candidates_for(guess_cell)
-        # print "before guess_candidates.each. Guess cell: #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}. value: #{guess_cell.value.inspect}"
+        puts "outside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id} at (#{guess_cell.row}, #{guess_cell.column}) (=#{guess_cell.value.inspect})"
         guess_candidates.each do |candidate|
-          puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
+          puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id} at (#{guess_cell.row}, #{guess_cell.column}) (=#{guess_cell.value.inspect})"
           guess_cell.value = candidate
           guess_grid.solve # Recursive step
         end
-        if guess_grid.solved?
-          puts "Guess grid solved"
-          self.cells = guess_grid.cells 
-        end
-        return nil
+        return if !guess_grid.solved?
+        self.cells = guess_grid.cells #
       end
     end
     raise 'Generated invalid solution' unless valid?
+  end
+
+  def first_unsolved_cell_in(grid)
+    grid.cells.find { |cell| !cell.solved? }
   end
   
   def easy_solver 
