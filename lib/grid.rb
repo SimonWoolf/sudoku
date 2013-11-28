@@ -124,23 +124,5 @@ class Grid
   def all_values_of(cells)
     cells.inject([]){|values, cell| values << cell.value }
   end
-
-  # def inspect
-  #   s = self.to_s
-  #   depth = Kernel.caller.select{|l| l.match /solve/}.count
-  #   puts " " * depth + "+---+---+---+"
-  #   puts " " * depth + "|" + s[0..2] + '|' + s[3..5] + '|' + s[6..8] + '|' 
-  #   puts " " * depth + "|" + s[9..11] + '|' + s[12..14] + '|' + s[15..17] + '|' 
-  #   puts " " * depth + "|" + s[18..20] + '|' + s[21..23] + '|' + s[24..26] + '|' 
-  #   puts " " * depth + "+---+---+---+"
-  #   puts " " * depth + "|" + s[27..29] + '|' + s[30..32] + '|' + s[33..35] + '|' 
-  #   puts " " * depth + "|" + s[36..38] + '|' + s[39..41] + '|' + s[42..44] + '|' 
-  #   puts " " * depth + "|" + s[45..47] + '|' + s[48..50] + '|' + s[51..53] + '|' 
-  #   puts " " * depth + "+---+---+---+"
-  #   puts " " * depth + "|" + s[54..56] + '|' + s[57..59] + '|' + s[60..62] + '|' 
-  #   puts " " * depth + "|" + s[63..65] + '|' + s[66..68] + '|' + s[69..71] + '|' 
-  #   puts " " * depth + "|" + s[72..74] + '|' + s[75..77] + '|' + s[78..80] + '|' 
-  #   puts " " * depth + "+---+---+---+"
-  # end
 end
 
