@@ -59,7 +59,6 @@ class Grid
 
   def solve()
     raise "Invalid state #{self.inspect}" if !valid?
-    p self
     while !solved?
       guess_grid = Grid.deep_copy(self)
       cells_and_candidates = unsolved_cells_in(guess_grid).map do |cell|
