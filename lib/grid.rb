@@ -59,7 +59,7 @@ class Grid
 
   def solve()
     raise "Invalid state #{self.inspect}" if !valid?
-    p self
+    # p self
     while !solved?
       guess_grid = Grid.deep_copy(self)
       guess_cell = first_unsolved_cell_in(guess_grid)
