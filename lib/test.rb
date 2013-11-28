@@ -1,6 +1,5 @@
-a = [1]
-puts a.object_id
+require_relative 'grid'
 
-a.each do
-  puts a.object_id
-end
+input = '.'*81
+grid = Grid.new(input)
+grid.solve
