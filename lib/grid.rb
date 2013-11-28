@@ -20,7 +20,6 @@ class Grid
   end
 
   def self.deep_copy(instance)
-    # Marshal.load(Marshal.dump(instance))
     Grid.new(instance.to_s)
   end
 
@@ -78,25 +77,21 @@ class Grid
       solved_cells = solved_cell_count()
       cells.each{|cell| solve_cell(cell) if !cell.solved?}
       if solved_cells == solved_cell_count()
-        try = make_a_guess
-        return nil if try.nil?
+        guess_grid = Grid.deep_copy(self)
+        guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
+        guess_candidates = candidates_for(guess_cell)
+        print "BEFORE guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
+        guess_candidates.each do |candidate|
+          print "AFTER guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n\n"
+          guess_cell.value = candidate
+          return true if guess_grid.solve
+        end
+        return nil
       end
     end
     raise 'Generated invalid solution' unless valid?
   end
 
-  def make_a_guess
-    guess_grid = Grid.deep_copy(self)
-    guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
-    guess_candidates = candidates_for(guess_cell)
-    print "BEFORE guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n"
-    guess_candidates.each do |candidate|
-      print "AFTER guest candidates objID: #{guess_candidates.object_id}, guess cell objID: #{guess_cell.object_id}\n\n"
-      guess_cell.value = candidate
-      return true if guess_grid.solve
-    end
-    nil
-  end
 
   def solved_cell_count
     cells.select {|cell| cell.solved?}.count
