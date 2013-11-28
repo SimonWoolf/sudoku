@@ -89,7 +89,7 @@ class Grid
         guess_candidates.each do |candidate|
           puts "inside guest_candidates.each. guess candidates: #{guess_candidates} for #{guess_cell.object_id}: #{guess_cell.row}, #{guess_cell.column}"
           guess_cell.value = candidate
-          return true if guess_grid.solve
+          guess_grid.solve # Recursive step
         end
         if guess_grid.solved?
           puts "Guess grid solved"
