@@ -59,11 +59,13 @@ class Grid
 
   def solve()
     raise "Invalid state #{self.inspect}" if !valid?
-    # p self
+    p self
     while !solved?
       guess_grid = Grid.deep_copy(self)
-      guess_cell = first_unsolved_cell_in(guess_grid)
-      guess_candidates = candidates_for(guess_cell)
+      cells_and_candidates = unsolved_cells_in(guess_grid).map do |cell|
+        [cell, candidates_for(cell)]
+      end
+      guess_cell, guess_candidates = cells_and_candidates.sort{|x, y| x[1].length <=> y[1].length}.first
       guess_candidates.each do |candidate|
         guess_cell.value = candidate
         guess_grid.solve # Recursive step
@@ -76,6 +78,10 @@ class Grid
 
   def first_unsolved_cell_in(grid)
     grid.cells.find { |cell| !cell.solved? }
+  end
+
+  def unsolved_cells_in(grid)
+    grid.cells.select { |cell| !cell.solved? }
   end
 
   def solved_cell_count
