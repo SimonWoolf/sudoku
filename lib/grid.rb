@@ -11,7 +11,7 @@ class Grid
 
   def initialize(input)
     normalised_input = input_interpreter(input)
-    raise "Invalid input" if !(normalised_input.length == 81)
+    raise "Invalid input" if normalised_input.length != 81
     initialize_cells(normalised_input)
   end
 
@@ -79,16 +79,8 @@ class Grid
     cells_and_candidates.sort{|x, y| x[1].length <=> y[1].length}.first
   end
 
-  def first_unsolved_cell_in(grid)
-    grid.cells.find { |cell| !cell.solved? }
-  end
-
   def unsolved_cells_in(grid)
     grid.cells.select { |cell| !cell.solved? }
-  end
-
-  def solved_cell_count
-    cells.select {|cell| cell.solved?}.count
   end
 
   def valid?
