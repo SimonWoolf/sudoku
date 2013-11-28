@@ -75,8 +75,7 @@ class Grid
   end
 
   def solve()
-    puts "entering solve(). Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"
-    p self
+    puts "entering solve(). Depth: #{Kernel.caller.select{|l| l.match /solve/}.count}"; p self
     raise_and_print_invalid_trace if !valid?
     while !solved?
       solved_cells = solved_cell_count()
