@@ -114,21 +114,7 @@ class Grid
     bars = '|'.*(27).split('')
     lines = bars.zip(groups_of_three).flatten
     eachline = (0..53).step(6).map{|i| "#{lines[i..i+5].join('')}|\n"}
-    puts horiz_splitter + "\n" + (1..9).step(3).map{|i| "#{eachline[i..i+2].join('')}#{horiz_splitter}"}.join("\n")
-
-    # puts "+---+---+---+"
-    # puts "|" + s[0..2] + '|' + s[3..5] + '|' + s[6..8] + '|' 
-    # puts "|" + s[9..11] + '|' + s[12..14] + '|' + s[15..17] + '|' 
-    # puts "|" + s[18..20] + '|' + s[21..23] + '|' + s[24..26] + '|' 
-    # puts "+---+---+---+"
-    # puts "|" + s[27..29] + '|' + s[30..32] + '|' + s[33..35] + '|' 
-    # puts "|" + s[36..38] + '|' + s[39..41] + '|' + s[42..44] + '|' 
-    # puts "|" + s[45..47] + '|' + s[48..50] + '|' + s[51..53] + '|' 
-    # puts "+---+---+---+"
-    # puts "|" + s[54..56] + '|' + s[57..59] + '|' + s[60..62] + '|' 
-    # puts "|" + s[63..65] + '|' + s[66..68] + '|' + s[69..71] + '|' 
-    # puts "|" + s[72..74] + '|' + s[75..77] + '|' + s[78..80] + '|' 
-    # puts "+---+---+---+"
+    puts "#{horiz_splitter}\n#{(1..9).step(3).map{|i| "#{eachline[i..i+2].join('')}#{horiz_splitter}"}.join("\n")}"
   end
 end
 
