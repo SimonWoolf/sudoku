@@ -80,7 +80,7 @@ class Grid
     raise_and_print_invalid_trace if !valid?
     while !solved?
       solved_cells = solved_cell_count()
-      cells.each{|cell| solve_cell(cell) if !cell.solved?}
+      easy_solver
       if solved_cells == solved_cell_count()
         guess_grid = Grid.deep_copy(self)
         guess_cell = guess_grid.cells.find { |cell| !cell.solved?}
@@ -100,6 +100,10 @@ class Grid
       end
     end
     raise 'Generated invalid solution' unless valid?
+  end
+  
+  def easy_solver 
+    cells.each{|cell| solve_cell(cell) if !cell.solved?}
   end
 
   def raise_and_print_invalid_trace
