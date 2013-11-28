@@ -64,6 +64,7 @@ class Grid
 
   def solve()
     raise "Invalid state #{self.inspect}" if !valid?
+    p self
     while !solved?
       solved_cells = solved_cell_count()
       if solved_cells == solved_cell_count()
@@ -74,7 +75,7 @@ class Grid
           guess_cell.value = candidate
           guess_grid.solve # Recursive step
         end
-        return if !guess_grid.solved?
+        return guess_grid if !guess_grid.solved?
         self.cells = guess_grid.cells #
       end
     end
@@ -114,20 +115,19 @@ class Grid
 
   def inspect
     s = self.to_s
-    depth = Kernel.caller.select{|l| l.match /solve/}.count
-    puts " " * depth + "+---+---+---+"
-    puts " " * depth + "|" + s[0..2] + '|' + s[3..5] + '|' + s[6..8] + '|' 
-    puts " " * depth + "|" + s[9..11] + '|' + s[12..14] + '|' + s[15..17] + '|' 
-    puts " " * depth + "|" + s[18..20] + '|' + s[21..23] + '|' + s[24..26] + '|' 
-    puts " " * depth + "+---+---+---+"
-    puts " " * depth + "|" + s[27..29] + '|' + s[30..32] + '|' + s[33..35] + '|' 
-    puts " " * depth + "|" + s[36..38] + '|' + s[39..41] + '|' + s[42..44] + '|' 
-    puts " " * depth + "|" + s[45..47] + '|' + s[48..50] + '|' + s[51..53] + '|' 
-    puts " " * depth + "+---+---+---+"
-    puts " " * depth + "|" + s[54..56] + '|' + s[57..59] + '|' + s[60..62] + '|' 
-    puts " " * depth + "|" + s[63..65] + '|' + s[66..68] + '|' + s[69..71] + '|' 
-    puts " " * depth + "|" + s[72..74] + '|' + s[75..77] + '|' + s[78..80] + '|' 
-    puts " " * depth + "+---+---+---+"
+    puts "+---+---+---+"
+    puts "|" + s[0..2] + '|' + s[3..5] + '|' + s[6..8] + '|' 
+    puts "|" + s[9..11] + '|' + s[12..14] + '|' + s[15..17] + '|' 
+    puts "|" + s[18..20] + '|' + s[21..23] + '|' + s[24..26] + '|' 
+    puts "+---+---+---+"
+    puts "|" + s[27..29] + '|' + s[30..32] + '|' + s[33..35] + '|' 
+    puts "|" + s[36..38] + '|' + s[39..41] + '|' + s[42..44] + '|' 
+    puts "|" + s[45..47] + '|' + s[48..50] + '|' + s[51..53] + '|' 
+    puts "+---+---+---+"
+    puts "|" + s[54..56] + '|' + s[57..59] + '|' + s[60..62] + '|' 
+    puts "|" + s[63..65] + '|' + s[66..68] + '|' + s[69..71] + '|' 
+    puts "|" + s[72..74] + '|' + s[75..77] + '|' + s[78..80] + '|' 
+    puts "+---+---+---+"
   end
 end
 

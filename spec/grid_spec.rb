@@ -60,13 +60,6 @@ describe Grid do
   end
 
   context 'solver' do
-    it 'should set cell to a number if that number is the only candidate' do
-      expect(unsolved_cell.value).to eq 0
-      # expect(grid).to receive(:solve_cell)
-      grid.solve_cell_at(1, 1)
-      expect(unsolved_cell.value).to eq 2
-    end
-
     it 'should solve the puzzle, if all cells are soluble without guessing' do
       grid.solve
       expect(grid).to be_solved 
@@ -74,10 +67,16 @@ describe Grid do
   end
 
   context 'solve hard problems' do
-    xit 'should give a solution for an empty grid' do
+    it 'should give a solution for an empty grid' do
       empty_grid = Grid.new('.'*81)
-      # expect(empty_grid.solve).to be_solved
-      expect {empty_grid.solve}.to raise_error
+      empty_grid.solve
+      expect(empty_grid).to be_solved
+    end
+
+    it 'should solve a example problem' do
+      grid = Grid.new(".....8........1..65.3...4...2....9.4....8...3.9.3...8...479......64...21......6..")
+      grid.solve
+      expect(grid).to be_solved
     end
   end
 
