@@ -34,7 +34,7 @@ class Grid
   end
 
   def to_s
-    cells.map{|cell| cell.to_s}.join('')
+    cells.map(&:to_s).join
   end
 
   def cell_at(row, column)
@@ -42,13 +42,13 @@ class Grid
   end
 
   def solved?
-    cells.all? {|cell| cell.solved?} && valid?
+    cells.all?(&:solved?) && valid?
   end
 
   def group_candidates_for(current_cell, group)
     neighbours = cells.select{|cell| cell.send(group) == current_cell.send(group)}
-    solved_neighbours = neighbours.select{|cell| cell.solved?}
-    GROUP_INDEX - solved_neighbours.map{|cell| cell.value}
+    solved_neighbours = neighbours.select(&:solved?)
+    GROUP_INDEX - solved_neighbours.map(&:value)
   end
 
   def candidates_for(current_cell)
@@ -80,7 +80,7 @@ class Grid
   end
 
   def unsolved_cells_in(grid)
-    grid.cells.select { |cell| !cell.solved? }
+    grid.cells.reject(&:solved?)
   end
 
   def valid?
