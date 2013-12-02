@@ -1,9 +1,8 @@
 class Cell
-  attr_reader :row, :column
+  attr_reader :column
   attr_accessor :value
 
-  def initialize(row, column, value)
-    @row = row
+  def initialize(column, value)
     @column = column
     @value = value
   end
@@ -16,7 +15,4 @@ class Cell
     @value != 0
   end
 
-  def box
-    (((row + 2)/3)*3 + (column + 2)/3 - 3)
-  end
 end
