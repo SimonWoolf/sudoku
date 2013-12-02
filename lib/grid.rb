@@ -4,8 +4,8 @@ require_relative 'cell'
 
 class Grid
   
-  GROUPS = [:row, :column, :box]
-  GROUP_INDEX = (1..9).to_a
+  UNITS = [:row, :column, :box]
+  UNIT_INDEX = (1..9).to_a
 
   attr_accessor :cells
 
@@ -21,12 +21,16 @@ class Grid
 
   def initialize_cells(normalised_input)
     @cells = []
-    GROUP_INDEX.each do |row|
-      GROUP_INDEX.each do |column|
-        value = normalised_input[(row-1)*9 + (column-1)].to_i
+    UNIT_INDEX.each do |row|
+      UNIT_INDEX.each do |column|
+        value = normalised_input[row_col_to_index(row, column)].to_i
         @cells << Cell.new(row, column, value)
       end
     end
+  end
+
+  def row_col_to_index(row, column)
+    (row-1)*9 + (column-1)
   end
 
   def input_interpreter(input)
@@ -38,22 +42,22 @@ class Grid
   end
 
   def cell_at(row, column)
-    cells.find{|cell| cell.row == row && cell.column == column}
+    cells.find{|cell| [cell.row, cell.column] == [row, column]}
   end
 
   def solved?
     cells.all?(&:solved?) && valid?
   end
 
-  def group_candidates_for(current_cell, group)
-    neighbours = cells.select{|cell| cell.send(group) == current_cell.send(group)}
+  def unit_candidates_for(current_cell, unit)
+    neighbours = cells.select{|cell| cell.send(unit) == current_cell.send(unit)}
     solved_neighbours = neighbours.select(&:solved?)
-    GROUP_INDEX - solved_neighbours.map(&:value)
+    UNIT_INDEX - solved_neighbours.map(&:value)
   end
 
   def candidates_for(current_cell)
-    GROUPS.inject(GROUP_INDEX) do |candidates, group|
-      candidates & group_candidates_for(current_cell, group)
+    UNITS.inject(UNIT_INDEX) do |candidates, unit|
+      candidates & unit_candidates_for(current_cell, unit)
     end
   end
 
@@ -84,10 +88,10 @@ class Grid
   end
 
   def valid?
-    GROUPS.each do |group_type|
-      GROUP_INDEX.each do |group_index|
-        values_in_group = all_values_of(cells_in_group(group_index, group_type))
-        return false if has_duplicates(values_in_group)
+    UNITS.each do |unit_type|
+      UNIT_INDEX.each do |unit_index|
+        values_in_unit = all_values_of(cells_in_unit(unit_index, unit_type))
+        return false if has_duplicates(values_in_unit)
       end
     end
     true
@@ -98,8 +102,8 @@ class Grid
     values.length != values.uniq.length
   end
 
-  def cells_in_group(group_number, group_type)
-    cells.select{|cell| cell.send(group_type) == group_number }
+  def cells_in_unit(unit_number, unit_type)
+    cells.select{|cell| cell.send(unit_type) == unit_number }
   end
 
   def all_values_of(cells)
@@ -108,9 +112,9 @@ class Grid
 
   def inspect
     horiz_splitter = "+---+---+---+"
-    groups_of_three = self.to_s.scan(/.../)
+    units_of_three = self.to_s.scan(/.../)
     bars = '|'.*(27).split('')
-    lines = bars.zip(groups_of_three).flatten
+    lines = bars.zip(units_of_three).flatten
     eachline = (0..53).step(6).map{|i| "#{lines[i..i+5].join('')}|\n"}
     puts "#{horiz_splitter}\n#{(0..8).step(3).map{|i| "#{eachline[i..i+2].join('')}#{horiz_splitter}"}.join("\n")}"
   end

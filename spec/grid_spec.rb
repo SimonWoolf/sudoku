@@ -38,20 +38,24 @@ describe Grid do
     it 'should know when it is not solved' do
       expect(grid).not_to be_solved 
     end
+
+    it 'should translate row 4, column 2 to linear zero-index 28' do
+      expect(grid.row_col_to_index(4, 2)).to eq 28
+    end
   end
 
   context 'should know the candidate values' do
 
     it "from its row, if not solved" do
-      expect(grid.group_candidates_for(unsolved_cell, :row).sort).to eq([1,2,3,4,5,6,7]) 
+      expect(grid.unit_candidates_for(unsolved_cell, :row).sort).to eq([1,2,3,4,5,6,7]) 
     end
 
     it "from its column, if not solved" do
-      expect(grid.group_candidates_for(unsolved_cell, :column).sort).to eq([2,5,6,9]) 
+      expect(grid.unit_candidates_for(unsolved_cell, :column).sort).to eq([2,5,6,9]) 
     end
 
     it "from its box, if not solved" do
-      expect(grid.group_candidates_for(unsolved_cell, :box).sort).to eq([1,2,7,9]) 
+      expect(grid.unit_candidates_for(unsolved_cell, :box).sort).to eq([1,2,7,9]) 
     end
   
     it 'for the current cell, if not solved' do
