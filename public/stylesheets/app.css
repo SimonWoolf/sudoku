@@ -8,7 +8,7 @@ div.box, div.cell {
 }
 
 div.box {
-  margin: 2px;
+  margin: 5px;
   border: 2px solid black;
 }
 
@@ -27,5 +27,22 @@ div.cell {
 
 body {
   text-align: center;
-  font-family: Arial;
+  font-family: 'Gentium Book Basic', Georgia, serif;
+}
+
+input {
+  /*stops it being overridden by webkit-small-control*/
+  font-family: inherit;
+  font-size: 20px;
+}
+
+h1 {
+  font-weight: 400;
+  margin-bottom: -0.4em;
+  font-size: 70px;
+}
+
+h2 {
+  font-weight: 100;
+  font-size: 25px;
 }
