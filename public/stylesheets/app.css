@@ -1,9 +1,31 @@
+#sudoku {
+  font-size: 0;
+  text-align:center;
+}
+
 div.box, div.cell {
-  /*border: 1px solid;*/
   display: inline-block;
+}
+
+div.box {
+  margin: 2px;
+  border: 2px solid black;
+}
+
+div.cell {
+  border: none;
+  border: 2px solid black;
 }
 
 .cell input {
   width: 30px;
   height: 30px;
+  text-align:center;
+  border: none;
+}
+
+
+body {
+  text-align: center;
+  font-family: Arial;
 }
