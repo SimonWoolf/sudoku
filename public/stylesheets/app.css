@@ -1,3 +1,9 @@
-.kitten {
-  border: 3px solid red;
+div.box, div.cell {
+  /*border: 1px solid;*/
+  display: inline-block;
+}
+
+.cell input {
+  width: 30px;
+  height: 30px;
 }
