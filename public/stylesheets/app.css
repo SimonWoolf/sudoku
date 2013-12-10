@@ -1,6 +1,7 @@
 #sudoku {
   font-size: 0;
   text-align:center;
+  margin-bottom: 20px;
 }
 
 div.box, div.cell {

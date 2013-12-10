@@ -1,6 +1,7 @@
 <h1>Sudoku</h1>
 <h2>It may be completely non-functional, but <i>damn</i> is this a beautiful font</h2>
 
+<form action="/" method="post">
 <div id='sudoku'>
   <% 3.times do |row| %>
     <div class='row'>
@@ -12,7 +13,7 @@
                 <div class='cell'>
                   <% cell_index = row * 27 + box * 3 + cell_row * 9 + cell %>
                   <% cell_value = @current_puzzle[cell_index] %>
-                  <input type="text" maxlength='1'
+                  <input name='cell[]' type="text" maxlength='1'
                    autocomplete='off' value=<%= cell_value %>>
                 </div>
               <% end %>
@@ -23,3 +24,9 @@
     </div>
   <% end %>
 </div>
+<input type="submit" value="Check solution" />
+</form>
+
+<form action="/solution" method="get" accept-charset="utf-8">
+  <input type="submit" value="Show solution" />
+</form>
