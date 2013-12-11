@@ -14,7 +14,7 @@ end
 def box_order_to_row_order(cells)
   puts "cells = #{cells}"
   boxes = cells.each_slice(9).to_a
-  p "boxes = #{boxes}"
+  puts "boxes = #{boxes}"
   (0..8).to_a.inject([]) do |memo, i|
     memo += boxes[i/3*3, 3].map do |box| 
       box[(i % 3) * 3, 3]
@@ -29,16 +29,25 @@ end
 
 def generate_new_puzzle
   sudoku = random_sudoku
+  puts sudoku.to_s
   session[:puzzle] = sudoku.to_s
   session[:solution] = solved(sudoku).to_s
-  session[:puzzle]
+end
+
+def prepare_check_solution
+  @check_solution = session[:check_solution]
+  session[:check_solution] = nil
 end
 
 get '/' do
-  @check_solution = session[:check_solution]
-  session[:check_solution] = nil
-  @current_puzzle = (session[:proposed_solution] || generate_new_puzzle) 
-  @proposed_solution = session[:proposed_solution] || @current_puzzle
+  prepare_check_solution
+  if @check_solution
+    @current_puzzle = session[:proposed_solution]
+  else
+    generate_new_puzzle
+    @current_puzzle = session[:puzzle]
+  end
+  @proposed_solution = session[:proposed_solution] || []
   @puzzle = session[:puzzle]
   @solution = session[:solution]
   erb :index
@@ -61,12 +70,12 @@ end
 
 helpers do
   def colour_class(checking, puzzle_val, proposed_val, solution_val)
-    if puzzle_val.to_i != 0 && proposed_val == puzzle_val
+    if !checking || proposed_val.to_i == 0
+      :unmodified
+    elsif puzzle_val.to_i != 0 && proposed_val == puzzle_val
       :provided
     elsif puzzle_val.to_i != 0 && proposed_val != puzzle_val
       :modified_provided
-    elsif !checking || proposed_val.to_i == 0
-     nil
     elsif proposed_val == solution_val
       :right
     else

@@ -23,6 +23,7 @@ describe 'sudoku app' do
     session = {}
     get '/', {}, {'rack.session' => session}
     expect(session[:puzzle].length).to eq(81)
+    expect(session[:solution].length).to eq(81)
     expect(session[:check_solution]).to be_nil
     expect(session[:proposed_solution]).to be_nil
   end
