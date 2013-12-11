@@ -70,10 +70,11 @@ class Grid
         guess_cell.value = candidate
         guess_grid.solve # Recursive step
       end
-      return guess_grid if !guess_grid.solved?
+      return nil if !guess_grid.solved?
       self.cells = guess_grid.cells
     end
     raise "Generated invalid solution #{self.inspect}" unless valid?
+    self
   end
 
   def cell_and_candidates_with_fewest_candidates_in(guess_grid)
@@ -108,6 +109,18 @@ class Grid
 
   def all_values_of(cells)
     cells.inject([]){|values, cell| values << cell.value }
+  end
+
+  def puzzle
+    puzzle = Grid.deep_copy(self)
+    (1..9).each do |box|
+      puzzle.cells.select do |cell| 
+        cell.box == box
+      end.sample(3).each do |cell| 
+        cell.value = 0
+      end
+    end
+    puzzle
   end
 
   def inspect

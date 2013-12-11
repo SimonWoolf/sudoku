@@ -8,8 +8,10 @@ set :session_secret, "not a secret"
 
 def random_sudoku
   seed = (1..9).to_a.shuffle + Array.new(81-9, 0)
-  sudoku = Grid.new(seed.join)
+  Grid.new(seed.join)
 end
+
+
 
 def box_order_to_row_order(cells)
   boxes = cells.each_slice(9).to_a
@@ -20,15 +22,10 @@ def box_order_to_row_order(cells)
   end
 end
 
-def solved(sudoku)
-  sudoku.solve
-  sudoku
-end
-
 def generate_new_puzzle
-  sudoku = random_sudoku
-  session[:puzzle] = sudoku.to_s
-  session[:solution] = solved(sudoku).to_s
+  sudoku = random_sudoku.solve
+  session[:solution] = sudoku.to_s
+  session[:puzzle] = sudoku.puzzle.to_s
   session[:proposed_solution] = nil
 end
 
