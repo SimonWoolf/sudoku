@@ -15,8 +15,8 @@
                   <% cell_value = cell_value(@current_puzzle[cell_index]) %>
                   <% colour_class = colour_class(@check_solution, @puzzle[cell_index], \
                      @proposed_solution[cell_index], @solution[cell_index])  %>
-                  <input class=<%= colour_class %> name='cell[]' type="text" maxlength='1'
-                   autocomplete='off' value=<%= cell_value %>>
+                  <input class="<%= colour_class %>" name='cell[]' type="text" maxlength='1'
+                   autocomplete='off' value="<%= cell_value %>">
                 </div>
               <% end %>
             </div>
@@ -33,3 +33,6 @@
   <button type="submit" name='solution'>Show solution</button>
 </form>
 
+<form action="/" method="get" accept-charset="utf-8">
+  <button type="submit" name='new'>Generate new puzzle</button>
+</form>

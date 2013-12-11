@@ -26,7 +26,7 @@ def generate_new_puzzle
   sudoku = random_sudoku
   session[:puzzle] = sudoku.to_s
   session[:solution] = solved(sudoku).to_s
-  session[:proposed_solution] = ''
+  session[:proposed_solution] = nil
 end
 
 def prepare_check_solution
@@ -39,7 +39,7 @@ get '/' do
   generate_new_puzzle if session[:puzzle].nil? || params[:new]
   @current_puzzle = session[:proposed_solution] || session[:puzzle]
   @current_puzzle = session[:solution] if params[:solution]
-  @proposed_solution = session[:proposed_solution]
+  @proposed_solution = session[:proposed_solution] || ''
   @puzzle = session[:puzzle]
   @solution = session[:solution]
   erb :index
