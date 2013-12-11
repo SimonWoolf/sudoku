@@ -26,7 +26,6 @@ describe 'sudoku app' do
     expect(session[:solution].length).to eq(81)
     expect(session[:check_solution]).to be_nil
     expect(session[:proposed_solution]).to be_nil
-     pp last_response
   end
 
   it 'should show the correct & incorrect values in a'\

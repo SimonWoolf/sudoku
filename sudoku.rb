@@ -1,9 +1,6 @@
 require 'sinatra'
 require_relative 'lib/grid'
 
-#TODO: Why the is params['cell'] only giving me filled-on values?
-#(or first nine values)?
-
 enable :sessions  unless test?
 
 def random_sudoku
@@ -29,6 +26,7 @@ def generate_new_puzzle
   sudoku = random_sudoku
   session[:puzzle] = sudoku.to_s
   session[:solution] = solved(sudoku).to_s
+  session[:proposed_solution] = ''
 end
 
 def prepare_check_solution
@@ -38,10 +36,10 @@ end
 
 get '/' do
   prepare_check_solution
-  generate_new_puzzle if session[:puzzle].nil?
+  generate_new_puzzle if session[:puzzle].nil? || params[:new]
   @current_puzzle = session[:proposed_solution] || session[:puzzle]
   @current_puzzle = session[:solution] if params[:solution]
-  @proposed_solution = session[:proposed_solution] || []
+  @proposed_solution = session[:proposed_solution]
   @puzzle = session[:puzzle]
   @solution = session[:solution]
   erb :index
@@ -52,14 +50,6 @@ post '/' do
   session[:proposed_solution] = cells.map(&:to_i).join
   session[:check_solution] = true
   redirect to('/')
-end
-
-get '/solution' do
-  puzzle = session[:puzzle]
-  sudoku = Grid.new(puzzle)
-  sudoku.solve
-  @current_puzzle = sudoku.to_s
-  erb :index
 end
 
 helpers do
