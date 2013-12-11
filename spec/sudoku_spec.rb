@@ -30,4 +30,8 @@ describe 'sudoku app' do
   it 'should show the correct & incorrect values in a'\
      'proposed solution if check_solution is set' do
   end
+
+  it "should return eser-entered values as a cell array" do
+    
+  end
 end

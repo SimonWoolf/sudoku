@@ -37,6 +37,23 @@ input {
   font-size: 20px;
 }
 
+.provided {
+  background-color: #DDDDDD;
+}
+
+.wrong {
+  background-color: #FF9999;
+}
+
+.right {
+  background-color: #88EE88;
+}
+
+.modified_provided {
+  background-color: #000000;
+  font-color: #FFFFFF;
+}
+
 h1 {
   font-weight: 400;
   margin-bottom: -0.4em;
