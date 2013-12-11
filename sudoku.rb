@@ -1,5 +1,7 @@
 require 'sinatra'
+require 'sinatra/partial' 
 require_relative 'lib/grid'
+set :partial_template_engine, :erb
 
 enable :sessions  unless test?
 
