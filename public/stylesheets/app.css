@@ -31,7 +31,7 @@ body {
   font-family: 'Gentium Book Basic', Georgia, serif;
 }
 
-input {
+button {
   /*stops it being overridden by webkit-small-control*/
   font-family: inherit;
   font-size: 20px;

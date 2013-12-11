@@ -12,7 +12,7 @@
               <% 3.times do |cell| %>
                 <div class='cell'>
                   <% cell_index = row * 27 + box * 3 + cell_row * 9 + cell %>
-                  <% cell_value = @current_puzzle[cell_index] %>
+                  <% cell_value = cell_value(@current_puzzle[cell_index]) %>
                   <% colour_class = colour_class(@check_solution, @puzzle[cell_index], \
                      @proposed_solution[cell_index], @solution[cell_index])  %>
                   <input class=<%= colour_class %> name='cell[]' type="text" maxlength='1'
@@ -26,7 +26,7 @@
     </div>
   <% end %>
 </div>
-<input type="submit" value="Check solution" />
+<button type="submit">Check solution</button>
 </form>
 
 <form action="/" method="get" accept-charset="utf-8">
