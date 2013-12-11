@@ -4,6 +4,7 @@ require_relative 'lib/grid'
 set :partial_template_engine, :erb
 
 enable :sessions  unless test?
+set :session_secret, "not a secret"
 
 def random_sudoku
   seed = (1..9).to_a.shuffle + Array.new(81-9, 0)

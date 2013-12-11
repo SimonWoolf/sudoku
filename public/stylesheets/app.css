@@ -23,6 +23,8 @@ div.cell {
   height: 30px;
   text-align:center;
   border: none;
+  font-family: inherit;
+  font-size: 20px;
 }
 
 
@@ -35,6 +37,21 @@ button {
   /*stops it being overridden by webkit-small-control*/
   font-family: inherit;
   font-size: 20px;
+}
+
+button[name="check"] {
+  /*margin-left: 0px;*/
+  /*float: left;*/
+  display: inline-block;
+}
+
+button[name="solution"] {
+  display: inline-block;
+}
+
+button[name="new"] {
+  /*margin-left: 400px;*/
+  display: inline-block;
 }
 
 .provided {
