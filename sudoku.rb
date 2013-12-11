@@ -38,12 +38,9 @@ end
 
 get '/' do
   prepare_check_solution
-  if @check_solution
-    @current_puzzle = session[:proposed_solution]
-  else
-    generate_new_puzzle
-    @current_puzzle = session[:puzzle]
-  end
+  generate_new_puzzle if session[:puzzle].nil?
+  @current_puzzle = session[:proposed_solution] || session[:puzzle]
+  @current_puzzle = session[:solution] if params[:solution]
   @proposed_solution = session[:proposed_solution] || []
   @puzzle = session[:puzzle]
   @solution = session[:solution]
