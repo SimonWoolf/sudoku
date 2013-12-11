@@ -12,9 +12,7 @@ def random_sudoku
 end
 
 def box_order_to_row_order(cells)
-  puts "cells = #{cells}"
   boxes = cells.each_slice(9).to_a
-  puts "boxes = #{boxes}"
   (0..8).to_a.inject([]) do |memo, i|
     memo += boxes[i/3*3, 3].map do |box| 
       box[(i % 3) * 3, 3]
@@ -29,7 +27,6 @@ end
 
 def generate_new_puzzle
   sudoku = random_sudoku
-  puts sudoku.to_s
   session[:puzzle] = sudoku.to_s
   session[:solution] = solved(sudoku).to_s
 end
