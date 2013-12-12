@@ -116,16 +116,13 @@ class Grid
   end
 
   def puzzle
-    try_puzzle(5)
-    #puts 'entering puzzlify'
-    #counter = 0
-    #loop do
-      #counter += 1
-      #puts counter
-      #puzzle_attempt = try_puzzle(5)
-      #return puzzle_attempt if Grid.deep_copy(puzzle_attempt).solve.to_s == self.to_s
-      #raise 'failed to puzzlify' if counter > 10
-    #end
+    counter = 0
+    loop do
+      counter += 1
+      attempt = try_puzzle(5)
+      return attempt if attempt.solve(true) == 1
+      raise 'failed to generate valid sudoku' if counter > 15
+    end
   end
 
   def try_puzzle(removals_per_box)
