@@ -84,10 +84,11 @@ describe Grid do
     end
   end
 
-   context 'solved?' do
-    it 'should verify the solution is correct' do
-      grid.solve
-      expect(grid).to be_valid
+  context 'multiple solutions' do
+    it 'should work out all solutions if true is passed to solve' do
+      grid = Grid.new("009870500124300009000040230201035097650900000000010065402060003080003600006701058")
+      solutions = grid.solve(true)
+      expect(solutions.length).to eq 4
     end
   end
 

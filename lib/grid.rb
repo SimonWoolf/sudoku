@@ -61,20 +61,28 @@ class Grid
     end
   end
 
-  def solve
+  def solve(all_solutions = false)
     raise "Invalid state #{self.inspect}" if !valid?
+    @solutions ||= [] if all_solutions 
     while !solved?
       guess_grid = Grid.deep_copy(self)
       guess_cell, guess_candidates = cell_and_candidates_with_fewest_candidates_in(guess_grid)
       guess_candidates.each do |candidate|
         guess_cell.value = candidate
-        guess_grid.solve # Recursive step
+        guess_grid.solve(all_solutions) # Recursive step
       end
-      return nil if !guess_grid.solved?
-      self.cells = guess_grid.cells
+      if all_solutions && guess_grid.solved?
+        puts 'adding: ' + guess_grid.to_s
+        @solutions << guess_grid.to_s
+        puts 'solutions is ' + @solutions.inspect
+      elsif !all_solutions
+        return nil if !guess_grid.solved?
+        self.cells = guess_grid.cells
+      end
+      return nil
     end
     raise "Generated invalid solution #{self.inspect}" unless valid?
-    self
+    all_solutions ? @solutions : self
   end
 
   def cell_and_candidates_with_fewest_candidates_in(guess_grid)
