@@ -87,8 +87,12 @@ describe Grid do
   context 'multiple solutions' do
     it 'should work out all solutions if true is passed to solve' do
       grid = Grid.new("009870500124300009000040230201035097650900000000010065402060003080003600006701058")
-      solutions = grid.solve(true)
-      expect(solutions.length).to eq 4
+      solutions_count = grid.solve(true)
+      expect(solutions_count).to eq 4
+    end
+
+    it 'should return 1 for a proper sudoku' do
+      expect(grid.solve(true)).to eq 1
     end
   end
 

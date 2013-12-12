@@ -41,6 +41,10 @@ class Grid
     cells.map(&:to_s).join
   end
 
+  def to_i
+    0 # Convenient for solve() when all_solutions is false
+  end
+
   def cell_at(row, column)
     cells.find{|cell| [cell.row, cell.column] == [row, column]}
   end
@@ -63,26 +67,20 @@ class Grid
 
   def solve(all_solutions = false)
     raise "Invalid state #{self.inspect}" if !valid?
-    @solutions ||= [] if all_solutions 
+    solutions_count ||= 0
     while !solved?
       guess_grid = Grid.deep_copy(self)
       guess_cell, guess_candidates = cell_and_candidates_with_fewest_candidates_in(guess_grid)
       guess_candidates.each do |candidate|
         guess_cell.value = candidate
-        guess_grid.solve(all_solutions) # Recursive step
+        solutions_count += guess_grid.solve(all_solutions).to_i # Recursive step
       end
-      if all_solutions && guess_grid.solved?
-        puts 'adding: ' + guess_grid.to_s
-        @solutions << guess_grid.to_s
-        puts 'solutions is ' + @solutions.inspect
-      elsif !all_solutions
-        return nil if !guess_grid.solved?
-        self.cells = guess_grid.cells
-      end
-      return nil
+      solutions_count += 1 if guess_grid.solved?
+      self.cells = guess_grid.cells if guess_grid.solved? && !all_solutions
+      return solutions_count
     end
     raise "Generated invalid solution #{self.inspect}" unless valid?
-    all_solutions ? @solutions : self
+    all_solutions ? solutions_count : self
   end
 
   def cell_and_candidates_with_fewest_candidates_in(guess_grid)
