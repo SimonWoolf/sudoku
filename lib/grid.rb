@@ -116,7 +116,7 @@ class Grid
     (1..9).each do |box|
       puzzle.cells.select do |cell| 
         cell.box == box
-      end.sample(3).each do |cell| 
+      end.sample(5).each do |cell| 
         cell.value = 0
       end
     end

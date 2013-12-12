@@ -3,6 +3,9 @@ require 'sinatra/partial'
 require_relative 'lib/grid'
 set :partial_template_engine, :erb
 
+#TODO: Grid#puzzle sometimes gives a puzzle that has
+#multiple solutions
+
 enable :sessions  unless test?
 set :session_secret, "not a secret"
 
