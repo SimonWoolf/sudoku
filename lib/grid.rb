@@ -68,7 +68,7 @@ class Grid
   def solve(all_solutions = false)
     raise "Invalid state #{self.inspect}" if !valid?
     solutions_count ||= 0
-    while !solved?
+    if !solved?
       guess_grid = Grid.deep_copy(self)
       guess_cell, guess_candidates = cell_and_candidates_with_fewest_candidates_in(guess_grid)
       guess_candidates.each do |candidate|
@@ -77,10 +77,8 @@ class Grid
       end
       solutions_count += 1 if guess_grid.solved?
       self.cells = guess_grid.cells if guess_grid.solved? && !all_solutions
-      return solutions_count
+      return all_solutions ? solutions_count : self
     end
-    raise "Generated invalid solution #{self.inspect}" unless valid?
-    all_solutions ? solutions_count : self
   end
 
   def cell_and_candidates_with_fewest_candidates_in(guess_grid)

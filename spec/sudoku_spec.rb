@@ -31,7 +31,7 @@ describe 'sudoku app' do
     Sinatra::Application
   end
 
-  xit "should generate a new puzzle on first load, setting cookies accordingly" do
+  it "should generate a new puzzle on first load, setting cookies accordingly" do
     session = {}
     get '/', {}, {'rack.session' => session}
     expect(session[:puzzle].length).to eq(81)
