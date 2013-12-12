@@ -61,7 +61,7 @@ class Grid
     end
   end
 
-  def solve()
+  def solve
     raise "Invalid state #{self.inspect}" if !valid?
     while !solved?
       guess_grid = Grid.deep_copy(self)
@@ -112,15 +112,27 @@ class Grid
   end
 
   def puzzle
-    puzzle = Grid.deep_copy(self)
+    puts 'entering puzzlify'
+    counter = 0
+    loop do
+      counter += 1
+      puts counter
+      puzzle_attempt = try_puzzle(5)
+      return puzzle_attempt if Grid.deep_copy(puzzle_attempt).solve.to_s == self.to_s
+      raise 'failed to puzzlify' if counter > 10
+    end
+  end
+
+  def try_puzzle(removals_per_box)
+    trypuzzle = Grid.deep_copy(self)
     (1..9).each do |box|
-      puzzle.cells.select do |cell| 
+      trypuzzle.cells.select do |cell| 
         cell.box == box
-      end.sample(5).each do |cell| 
+      end.sample(removals_per_box).each do |cell| 
         cell.value = 0
       end
     end
-    puzzle
+    trypuzzle
   end
 
   def inspect

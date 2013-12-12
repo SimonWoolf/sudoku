@@ -21,7 +21,7 @@ describe 'helper functions' do
   it 'puzzlify then solve should get you back to where you started' do
     sudoku = random_sudoku.solve
     sudoku_puzzle = sudoku.puzzle
-    p sudoku_puzzle
+    puts sudoku_puzzle.to_s
     expect(sudoku_puzzle.solve.to_s).to eq(sudoku.to_s)
   end
 end
