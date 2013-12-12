@@ -5,6 +5,7 @@ set :partial_template_engine, :erb
 
 #TODO: Grid#puzzle sometimes gives a puzzle that has
 #multiple solutions
+# - make new a POST request???
 
 enable :sessions  unless test?
 set :session_secret, "not a secret"
@@ -13,8 +14,6 @@ def random_sudoku
   seed = (1..9).to_a.shuffle + Array.new(81-9, 0)
   Grid.new(seed.join)
 end
-
-
 
 def box_order_to_row_order(cells)
   boxes = cells.each_slice(9).to_a
@@ -37,11 +36,20 @@ def prepare_check_solution
   session[:check_solution] = nil
 end
 
+def process_proposed_solution
+  cells = box_order_to_row_order(params['cell'])
+  session[:proposed_solution] = cells.map(&:to_i).join
+  session[:check_solution] = true
+end
+
+def load_solution
+  session[:proposed_solution] = session[:solution]
+end
+
 get '/' do
   prepare_check_solution
-  generate_new_puzzle if session[:puzzle].nil? || params[:new]
+  generate_new_puzzle if session[:puzzle].nil?
   @current_puzzle = session[:proposed_solution] || session[:puzzle]
-  @current_puzzle = session[:solution] if params[:solution]
   @proposed_solution = session[:proposed_solution] || ''
   @puzzle = session[:puzzle]
   @solution = session[:solution]
@@ -49,9 +57,9 @@ get '/' do
 end
 
 post '/' do
-  cells = box_order_to_row_order(params['cell'])
-  session[:proposed_solution] = cells.map(&:to_i).join
-  session[:check_solution] = true
+  generate_new_puzzle if params[:new]
+  process_proposed_solution if params[:cell]
+  load_solution if params[:solution]
   redirect to('/')
 end
 
