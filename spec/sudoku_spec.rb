@@ -40,6 +40,13 @@ describe 'sudoku app' do
     expect(session[:proposed_solution]).to be_nil
   end
 
+
+  it "should set the night cookie if night button pressed" do
+    session = {}
+    post '/', {:night => ''}, {'rack.session' => session}
+    expect(session[:night]).to be_true
+  end
+
   it 'should show the correct & incorrect values in a'\
      'proposed solution if check_solution is set' do
   end

@@ -1,5 +1,4 @@
-<h1>Sudoku</h1>
-<h2>It does sudoku. Whaddaya want, blood?</h2>
+<h1><blink>Sudoku</blink></h1>
 
 <form action="/" method="post">
 <div id='sudoku'>
@@ -40,3 +39,9 @@
 </div>
 
 <h4>Don't know how to play? Try Google&trade;</h4>
+
+<form action="/" method="post" id="night">
+  <button type="submit" name="night">
+    <%= night_mode ? 'Day' : 'Night' %> mode
+  </button>
+</form>

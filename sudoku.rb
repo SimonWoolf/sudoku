@@ -59,6 +59,7 @@ get '/' do
 end
 
 post '/' do
+  session[:night] = !session[:night] if params[:night]
   generate_new_puzzle if params[:new]
   process_proposed_solution if params[:cell]
   load_solution if params[:solution]
@@ -82,5 +83,9 @@ helpers do
 
   def cell_value(value)
     value.to_i == 0 ? '' : value
+  end
+
+  def night_mode
+    session[:night]
   end
 end
