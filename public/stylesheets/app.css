@@ -45,6 +45,9 @@ button {
   /*stops it being overridden by webkit-small-control*/
   font-family: inherit;
   font-size: 20px;
+  background-color:transparent;
+  border: 2px solid black;
+  border-radius:20px;
 }
 
 button[name="check"] {
