@@ -33,6 +33,14 @@ body {
   font-family: 'Gentium Book Basic', Georgia, serif;
 }
 
+#secondrow_buttons {
+  margin: 10px auto;
+}
+
+form {
+  display: inline;
+}
+
 button {
   /*stops it being overridden by webkit-small-control*/
   font-family: inherit;
@@ -40,18 +48,8 @@ button {
 }
 
 button[name="check"] {
-  /*margin-left: 0px;*/
+  margin: 0 auto;
   /*float: left;*/
-  display: inline-block;
-}
-
-button[name="solution"] {
-  display: inline-block;
-}
-
-button[name="new"] {
-  /*margin-left: 400px;*/
-  display: inline-block;
 }
 
 .provided {
