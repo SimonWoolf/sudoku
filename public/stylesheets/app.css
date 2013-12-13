@@ -75,11 +75,14 @@ button[name="check"] {
 
 h1 {
   font-weight: 400;
-  margin-bottom: -0.4em;
   font-size: 70px;
 }
 
 h2 {
   font-weight: 100;
   font-size: 25px;
+}
+
+h4 {
+  margin: 50px;
 }
