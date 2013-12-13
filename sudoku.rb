@@ -1,12 +1,13 @@
 require 'sinatra'
-require 'sinatra/partial' 
+require 'sinatra/partial'
+require 'unicorn'
 require_relative 'lib/grid'
-set :partial_template_engine, :erb
-configure :production do require 'newrelic_rpm' end
 
-#TODO: Grid#puzzle sometimes gives a puzzle that has
-#multiple solutions
-# - make new a POST request???
+#set :server, %w[unicorn thin mongrel webrick]
+set :server, 'unicorn'
+set :partial_template_engine, :erb
+
+configure :production do require 'newrelic_rpm' end
 
 enable :sessions  unless test?
 set :session_secret, "not a secret"

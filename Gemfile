@@ -5,3 +5,4 @@ gem "shotgun"
 gem "sinatra"
 gem "sinatra-partial"
 gem 'newrelic_rpm'
+gem 'unicorn'
