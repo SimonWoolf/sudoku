@@ -64,22 +64,23 @@ describe Grid do
   end
 
   context 'solver' do
-    it 'should solve the puzzle, if all cells are soluble without guessing' do
-      grid.solve
-      expect(grid).to be_solved 
+    it 'should be able to solve non-destructively' do
+      solved_grid = grid.solve
+      expect(solved_grid).to be_solved
+      expect(grid).to_not be_solved
     end
   end
 
   context 'solve hard problems' do
     it 'should give a solution for an empty grid' do
       empty_grid = Grid.new('.'*81)
-      empty_grid.solve
+      empty_grid.solve!
       expect(empty_grid).to be_solved
     end
 
     it 'should solve a example problem' do
       grid = Grid.new(".....8........1..65.3...4...2....9.4....8...3.9.3...8...479......64...21......6..")
-      grid.solve
+      grid.solve!
       expect(grid).to be_solved
     end
   end
@@ -87,12 +88,12 @@ describe Grid do
   context 'multiple solutions' do
     it 'should work out all solutions if true is passed to solve' do
       grid = Grid.new("009870500124300009000040230201035097650900000000010065402060003080003600006701058")
-      solutions_count = grid.solve(true)
+      solutions_count = grid.num_solutions
       expect(solutions_count).to eq 4
     end
 
     it 'should return 1 for a proper sudoku' do
-      expect(grid.solve(true)).to eq 1
+      expect(grid.num_solutions).to eq 1
     end
   end
 

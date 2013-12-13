@@ -65,7 +65,20 @@ class Grid
     end
   end
 
-  def solve(all_solutions = false)
+  def num_solutions
+    solve_recurser(true)
+  end
+
+  def solve!
+    solve_recurser(false)
+  end
+
+  def solve
+    grid = Grid.deep_copy(self)
+    grid.solve!
+  end
+
+  def solve_recurser(all_solutions = false)
     raise "Invalid state #{self.inspect}" if !valid?
     solutions_count ||= 0
     if !solved?
@@ -73,7 +86,7 @@ class Grid
       guess_cell, guess_candidates = cell_and_candidates_with_fewest_candidates_in(guess_grid)
       guess_candidates.each do |candidate|
         guess_cell.value = candidate
-        solutions_count += guess_grid.solve(all_solutions).to_i # Recursive step
+        solutions_count += guess_grid.solve_recurser(all_solutions).to_i # Recursive step
       end
       solutions_count += 1 if guess_grid.solved?
       self.cells = guess_grid.cells if guess_grid.solved? && !all_solutions
@@ -120,7 +133,7 @@ class Grid
     loop do
       counter += 1
       attempt = try_puzzle(5)
-      return attempt if attempt.solve(true) == 1
+      return attempt if attempt.num_solutions == 1
       raise 'failed to generate valid sudoku' if counter > 15
     end
   end
