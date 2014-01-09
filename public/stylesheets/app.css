@@ -1,3 +1,7 @@
+* {
+  transition: color 2s;
+}
+
 #sudoku {
   font-size: 0;
   text-align:center;
@@ -32,6 +36,7 @@ body {
   background-color: white;
   text-align: center;
   font-family: 'Gentium Book Basic', Georgia, serif;
+  transition: background-color 2s;
 }
 
 #secondrow_buttons {
@@ -85,5 +90,12 @@ h2 {
 }
 
 h4 {
+  color: black;
+
   margin: 50px;
+}
+
+a:link { 
+  color: inherit; 
+  text-decoration: inherit;
 }
