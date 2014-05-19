@@ -13,15 +13,9 @@ describe 'helper functions' do
     expect(box_order_to_row_order(box_order)).to eq (1..81).to_a
   end
 
-  xit 'should puzzlify a compelted grid, leaving 27 filled-in cells' do
-    sudoku = random_sudoku.solve.puzzle
-    expect(sudoku.to_s.chars.count{|c| c.to_i != 0}).to eq(27)
-  end
-
   it 'puzzlify then solve should get you back to where you started' do
     sudoku = random_sudoku.solve
     sudoku_puzzle = sudoku.puzzle
-    puts sudoku_puzzle.to_s
     expect(sudoku_puzzle.solve.to_s).to eq(sudoku.to_s)
   end
 end
