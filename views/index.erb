@@ -14,8 +14,8 @@
                   <% cell_value = cell_value(@current_puzzle[cell_index]) %>
                   <% colour_class = colour_class(@check_solution, @puzzle[cell_index], \
                      @proposed_solution[cell_index], @solution[cell_index])  %>
-                  <input class="<%= colour_class %>" name='cell[]' type="text" maxlength='1'
-                  autocomplete='off' value="<%= cell_value %>" 
+                   <input class="<%= colour_class %>" name='cell[]' type="text" 
+                     pattern="[1-9]" maxlength='1' autocomplete='off' value="<%= cell_value %>" 
                   <%= "readonly" if @puzzle[cell_index].to_i != 0 %> >
                 </div>
               <% end %>

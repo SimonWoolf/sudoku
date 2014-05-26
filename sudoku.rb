@@ -91,7 +91,6 @@ helpers do
   end
 
   def night_mode
-    puts session[:night].inspect
     session[:night]
   end
 end
