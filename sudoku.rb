@@ -67,6 +67,10 @@ post '/' do
   redirect to('/')
 end
 
+post '/night' do
+  session[:night] = !session[:night] if params[:night]
+end
+
 helpers do
   def colour_class(checking, puzzle_val, proposed_val, solution_val)
     if !checking || proposed_val.to_i == 0
@@ -87,6 +91,7 @@ helpers do
   end
 
   def night_mode
+    puts session[:night].inspect
     session[:night]
   end
 end

@@ -14,6 +14,11 @@ $(document).ready(function () {
 
   $('#night').on('click', function(event) {
     event.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "/night",
+      data: {"night": true}
+    });
     day = !!isDay();
     $('body').css('background-color', bgcolor(day));
     $('h1,h2,h3,h4,button').css('color', fgcolor(day));
